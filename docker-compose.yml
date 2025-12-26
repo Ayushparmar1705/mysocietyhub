@@ -1,0 +1,43 @@
+version: "3.8"
+
+services:
+  postgres:
+    image: postgres:15
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: society
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin123
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+  pgadmin:
+    image: dpage/pgadmin4
+    restart: unless-stopped
+    environment:
+        PGADMIN_DEFAULT_EMAIL: admin@gmail.com
+        PGADMIN_DEFAULT_PASSWORD: admin123
+    ports:
+      - "5050:80"
+    depends_on:
+      - postgres
+  societyservice:
+    build:
+      context: ./Services/SocietyService/app
+      dockerfile: Dockerfile
+    image: societyservice:latest
+    ports:
+      - "3000:8000"
+    restart: always
+    depends_on:
+      - postgres
+    environment:
+      POSTGRES_HOST: postgres
+      POSTGRES_PORT: 5432
+      POSTGRES_DATABASE: society
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin123
+
+volumes:
+  postgres-data:
