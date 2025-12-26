@@ -19,13 +19,22 @@ class SocietyModel {
         const result = await pool.query(sql, sdata);
         return result;
     }
-    async view(){
+    async view() {
         const sql = "SELECT * FROM society";
         const result = await pool.query(sql);
         return result;
     }
 
+    async search(name) {
+        const sql = "SELECT * FROM society WHERE society_name = $1";
+        const result = await pool.query(sql, [name]);
+        return result;
+    }
+    async delete(id) {
+        const sql = "UPDATE society SET is_delete = true WHERE society_id = ?";
+        const result = await pool.query(sql, [id]);
+        return result;
+    }
+
 }
 module.exports = SocietyModel;
-
-

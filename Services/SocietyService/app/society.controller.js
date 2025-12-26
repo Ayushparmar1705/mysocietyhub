@@ -16,17 +16,30 @@ class SocietyController {
             return res.status(500).send({ message: err });
         }
     }
-    async view(_,res){
-        try{
+    async view(_, res) {
+        try {
             const result = await this.service.Views();
-            if(result.rows.length>0){
-                return res.status(200).send({message:result.rows});
-            }else{
-                return res.status(500).send({message:err});
+            if (result.rows.length > 0) {
+                return res.status(200).send({ message: result.rows });
+            } else {
+                return res.status(500).send({ message: err });
             }
-        }catch(err){
+        } catch (err) {
             console.log(err);
-            return res.status(500).send({message:err});
+            return res.status(500).send({ message: err });
+        }
+    }
+    async search(req, res) {
+        try {
+            const result = await this.service.search(req.params.society_name);
+            if (result.rows.length > 0) {
+                return res.status(200).send({ message: result });
+            } else {
+                return res.status(500).send({ message: "No society found" });
+            }
+        } catch (err) {
+            console.log(err);
+            return res.status(500).send({ message: err });
         }
     }
 }
