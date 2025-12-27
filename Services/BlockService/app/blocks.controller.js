@@ -1,7 +1,7 @@
-const SocietyService = require("./society.service");
-class SocietyController {
+const BlockService = require("./blocks.service");
+class BlockController {
     constructor() {
-        this.service = new SocietyService();
+        this.service = new BlockService();
     }
     async create(req, res) {
         try {
@@ -22,7 +22,7 @@ class SocietyController {
             if (result.rows.length > 0) {
                 return res.status(200).send({ message: result.rows });
             } else {
-                return res.status(500).send({ message: "No society foound" });
+                return res.status(500).send({ message: "No blocks found" });
             }
         } catch (err) {
             console.log(err);
@@ -43,5 +43,5 @@ class SocietyController {
         }
     }
 }
-module.exports = SocietyController;
+module.exports = BlockController;
 
