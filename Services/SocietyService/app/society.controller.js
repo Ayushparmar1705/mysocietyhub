@@ -44,4 +44,3 @@ class SocietyController {
     }
 }
 module.exports = SocietyController;
-
